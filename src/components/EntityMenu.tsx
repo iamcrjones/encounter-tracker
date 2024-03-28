@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const MapMenu = () => {
+const EntityMenu = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [maps, setMaps] = useState<any[]>([]);
   const handleMapMenuClick = () => {
@@ -11,6 +11,9 @@ const MapMenu = () => {
   };
   return (
     <div className="flex w-full h-full">
+      <button className="bg-pink-500 w-10 h-8" onClick={handleMapMenuClick}>
+        {open ? "close" : "open"}
+      </button>
       <div
         className={`flex flex-col ${open ? "w-72" : "w-0"} h-full bg-zinc-500/5 transition-all duration-700 ease-in-out`}
       >
@@ -24,17 +27,14 @@ const MapMenu = () => {
           })}{" "}
         </div>
         <button
-          className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline  outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-700 ease-in-out `}
+          className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-700 ease-in-out`}
           onClick={handleNewMap}
         >
           New
         </button>
       </div>
-      <button className="bg-pink-500 w-10 h-8 " onClick={handleMapMenuClick}>
-        {open ? "close" : "open"}
-      </button>
     </div>
   );
 };
 
-export default MapMenu;
+export default EntityMenu;
