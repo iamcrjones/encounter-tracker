@@ -2,10 +2,14 @@ import { ImageOverlay, MapContainer, Marker } from "react-leaflet";
 import L from "leaflet";
 import { useMaps } from "../utils/state/useMaps";
 import { usePlayers } from "../utils/state/usePlayers";
+import { useEnemies } from "../utils/state/useEnemies";
 const MapComponent = () => {
   const selectedMap = useMaps((state) => state.selectedMap);
   const players = usePlayers((state) => state.players);
   const updatePlayer = usePlayers((state) => state.updatePlayer);
+
+  const enemies = useEnemies((state) => state.enemies);
+  const updateEnemy = useEnemies((state) => state.updateEnemy);
   console.log({ selectedMap, players });
 
   return (
@@ -69,6 +73,39 @@ const MapComponent = () => {
                     //   newPoint[index] = newCoords;
                     //   return newPoint;
                     // });
+                  },
+                }}
+              />
+            );
+          })}
+        {!!enemies.length &&
+          enemies.map((enemy: Record<any, any>, ix) => {
+            return (
+              <Marker
+                position={enemy.location}
+                key={`enemy-${enemy.name}-${ix}`}
+                draggable
+                icon={
+                  new L.DivIcon({
+                    html: `<svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                fill="#00ff00" 
+                                viewBox="0 0 16 16" 
+                                stroke-width="1" 
+                                stroke="#FFF" 
+                            >
+                                <circle cx="8" cy="8" r="8" />
+
+                            </svg>`,
+                    iconSize: [50, 50],
+                    className: "",
+                  })
+                }
+                eventHandlers={{
+                  dragend: (event) => {
+                    const { lat, lng } = event.target.getLatLng();
+                    console.log({ lat, lng });
+                    updateEnemy(ix, { ...enemy, location: [lat, lng] });
                   },
                 }}
               />

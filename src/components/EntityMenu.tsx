@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { usePlayers } from "../utils/state/usePlayers";
+import { useEnemies } from "../utils/state/useEnemies";
 
 const EntityMenu = () => {
   const addPlayer = usePlayers((state) => state.addPlayer);
+  const players = usePlayers((state) => state.players);
+
+  const enemies = useEnemies((state) => state.enemies);
+  const addEnemy = useEnemies((state) => state.addEnemy);
   const [open, setOpen] = useState<boolean>(false);
   const handleMenuOpen = () => {
     setOpen(!open);
   };
 
+  const handleAddEnemy = () => {
+    addEnemy({ name: "test-enemy", status: "none", location: [1000, 1000] });
+  };
   const handleAddPlayer = () => {
     addPlayer({ name: "test", status: "none", location: [500, 500] });
   };
@@ -24,6 +32,9 @@ const EntityMenu = () => {
           className={`${open ? "w-56" : "w-0 "} w-full flex flex-col gap-6 justify-start py-10 items-center h-full overflow-hidden`}
         >
           Players
+          {players.map((player, ix) => {
+            return <p key={`p-${player.name}-${ix}`}>{player.name}</p>;
+          })}
           <button
             className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
             onClick={handleAddPlayer}
@@ -35,9 +46,12 @@ const EntityMenu = () => {
           className={`${open ? "w-56" : "w-0 "} w-full flex flex-col gap-6 justify-start py-10 items-center h-full overflow-hidden`}
         >
           Enemies
+          {enemies.map((enemy, ix) => {
+            return <p key={`e-${enemy.name}-${ix}`}>{enemy.name}</p>;
+          })}
           <button
             className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
-            onClick={() => console.log("clicknew")}
+            onClick={handleAddEnemy}
           >
             New
           </button>
