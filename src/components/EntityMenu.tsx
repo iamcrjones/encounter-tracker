@@ -15,7 +15,7 @@ const EntityMenu = () => {
         {open ? "close" : "open"}
       </button>
       <div
-        className={`flex flex-col ${open ? "w-72" : "w-0"} h-full bg-zinc-500/5 transition-all duration-700 ease-in-out`}
+        className={`flex flex-col ${open ? "w-72" : "w-0"} h-full bg-zinc-500/90 transition-all duration-500 ease-in-out`}
       >
         <div
           className={`${open ? "w-56" : "w-0 "} w-full flex flex-col gap-6 justify-start py-10 items-center h-full overflow-hidden`}
@@ -27,7 +27,7 @@ const EntityMenu = () => {
           })}{" "}
         </div>
         <button
-          className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-700 ease-in-out`}
+          className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
           onClick={handleNewMap}
         >
           New

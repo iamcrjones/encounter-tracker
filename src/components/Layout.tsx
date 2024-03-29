@@ -8,10 +8,10 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div>
       {/*Left menu will be maps*/}
-      <div className="absolute left-0 h-full py-6">
+      <div className="absolute left-0 h-full py-6 z-[9999]">
         <MapMenu />
       </div>{" "}
-      <div className="absolute right-0 h-full py-6">
+      <div className="absolute right-0 h-full py-6 z-[9999]">
         <EntityMenu />
       </div>
       {/*Right menu will be entities (players, enemies etc.)*/}
