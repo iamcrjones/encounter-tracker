@@ -1,17 +1,20 @@
 import { useState } from "react";
+import { usePlayers } from "../utils/state/usePlayers";
 
 const EntityMenu = () => {
+  const addPlayer = usePlayers((state) => state.addPlayer);
   const [open, setOpen] = useState<boolean>(false);
-  const [maps, setMaps] = useState<any[]>([]);
-  const handleMapMenuClick = () => {
+  const handleMenuOpen = () => {
     setOpen(!open);
   };
-  const handleNewMap = () => {
-    setMaps((prev) => [...prev, prev.length]);
+
+  const handleAddPlayer = () => {
+    addPlayer({ name: "test", status: "none", location: [500, 500] });
   };
+
   return (
     <div className="flex w-full h-full">
-      <button className="bg-pink-500 w-10 h-8" onClick={handleMapMenuClick}>
+      <button className="bg-pink-500 w-10 h-8" onClick={handleMenuOpen}>
         {open ? "close" : "open"}
       </button>
       <div
@@ -20,18 +23,25 @@ const EntityMenu = () => {
         <div
           className={`${open ? "w-56" : "w-0 "} w-full flex flex-col gap-6 justify-start py-10 items-center h-full overflow-hidden`}
         >
-          {maps.map(() => {
-            return (
-              <div className="w-48 h-32 outline outline-2 outline-gray-400"></div>
-            );
-          })}{" "}
+          Players
+          <button
+            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
+            onClick={handleAddPlayer}
+          >
+            New
+          </button>
         </div>
-        <button
-          className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
-          onClick={handleNewMap}
+        <div
+          className={`${open ? "w-56" : "w-0 "} w-full flex flex-col gap-6 justify-start py-10 items-center h-full overflow-hidden`}
         >
-          New
-        </button>
+          Enemies
+          <button
+            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
+            onClick={() => console.log("clicknew")}
+          >
+            New
+          </button>
+        </div>
       </div>
     </div>
   );

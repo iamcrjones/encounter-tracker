@@ -10,9 +10,6 @@ const MapMenu = () => {
   const handleMapMenuClick = () => {
     setOpen(!open);
   };
-  // const handleNewMap = () => {
-  //   setMaps((prev) => [...prev, prev.length]);
-  // };
   const handleImportFile = () => {
     if (fileInputRef.current !== null) {
       fileInputRef.current.click();
@@ -31,6 +28,8 @@ const MapMenu = () => {
   };
 
   const handleMapSelect = (map) => {
+    // commented while developing
+    // setOpen(false);
     selectMap(map);
   };
 
