@@ -3,14 +3,14 @@ import L from "leaflet";
 import { useMaps } from "../utils/state/useMaps";
 import { usePlayers } from "../utils/state/usePlayers";
 import { useEnemies } from "../utils/state/useEnemies";
+import { useShallow } from "zustand/react/shallow";
 const MapComponent = () => {
-  const selectedMap = useMaps((state) => state.selectedMap);
-  const players = usePlayers((state) => state.players);
-  const updatePlayer = usePlayers((state) => state.updatePlayer);
+  const selectedMap = useMaps(useShallow((state) => state.selectedMap));
+  const players = usePlayers(useShallow((state) => state.players));
+  const updatePlayer = usePlayers(useShallow((state) => state.updatePlayer));
 
-  const enemies = useEnemies((state) => state.enemies);
-  const updateEnemy = useEnemies((state) => state.updateEnemy);
-  console.log({ selectedMap, players });
+  const enemies = useEnemies(useShallow((state) => state.enemies));
+  const updateEnemy = useEnemies(useShallow((state) => state.updateEnemy));
 
   return (
     <>
@@ -31,7 +31,6 @@ const MapComponent = () => {
         attributionControl={false}
       >
         <ImageOverlay
-          // url="https://i.pinimg.com/736x/a6/3c/c9/a63cc9d1458f3ad77d4160d21bd06640.jpg"
           url={selectedMap}
           bounds={[
             [500, 500],
@@ -40,11 +39,11 @@ const MapComponent = () => {
           className="z-[9990]"
         />
         {!!players.length &&
-          players.map((player: Record<any, any>, ix) => {
+          players.map((player, ix) => {
             return (
               <Marker
                 position={player.location}
-                key={`player-${player.name}-${ix}`}
+                key={player.id}
                 draggable
                 icon={
                   new L.DivIcon({
@@ -65,31 +64,24 @@ const MapComponent = () => {
                 eventHandlers={{
                   dragend: (event) => {
                     const { lat, lng } = event.target.getLatLng();
-                    console.log({ lat, lng });
                     updatePlayer(ix, { ...player, location: [lat, lng] });
-                    // const newCoords = [lat, lng];
-                    // setPoint((prevPoint) => {
-                    //   const newPoint = [...prevPoint];
-                    //   newPoint[index] = newCoords;
-                    //   return newPoint;
-                    // });
                   },
                 }}
               />
             );
           })}
         {!!enemies.length &&
-          enemies.map((enemy: Record<any, any>, ix) => {
+          enemies.map((enemy, ix) => {
             return (
               <Marker
                 position={enemy.location}
-                key={`enemy-${enemy.name}-${ix}`}
+                key={enemy.id}
                 draggable
                 icon={
                   new L.DivIcon({
                     html: `<svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                fill="#00ff00" 
+                                fill="#ff0000" 
                                 viewBox="0 0 16 16" 
                                 stroke-width="1" 
                                 stroke="#FFF" 
@@ -104,7 +96,6 @@ const MapComponent = () => {
                 eventHandlers={{
                   dragend: (event) => {
                     const { lat, lng } = event.target.getLatLng();
-                    console.log({ lat, lng });
                     updateEnemy(ix, { ...enemy, location: [lat, lng] });
                   },
                 }}

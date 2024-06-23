@@ -1,6 +1,16 @@
 import { create } from "zustand";
 
-export const useMaps = create((set) => ({
+interface MapState {
+  mapCount: number;
+  maps: string[];
+  selectedMap: string;
+  incrementMapCount: () => void;
+  resetMapCount: () => void;
+  addMap: (newMap: string) => void;
+  selectMap: (map: string) => void;
+}
+
+export const useMaps = create<MapState>((set) => ({
   mapCount: 0,
   maps: [],
   selectedMap: "",

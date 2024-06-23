@@ -6,7 +6,7 @@ const MapMenu = () => {
   const maps = useMaps((state) => state.maps);
   const selectMap = useMaps((state) => state.selectMap);
   const [open, setOpen] = useState<boolean>(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const handleMapMenuClick = () => {
     setOpen(!open);
   };
@@ -16,20 +16,20 @@ const MapMenu = () => {
     }
   };
 
-  const handleFile = (e) => {
-    const file = e.target.files[0];
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        addMap(event.target.result);
+        if (event.target?.result) {
+          addMap(event.target.result.toString());
+        }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleMapSelect = (map) => {
-    // commented while developing
-    // setOpen(false);
+  const handleMapSelect = (map: string) => {
     selectMap(map);
   };
 

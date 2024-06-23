@@ -1,6 +1,25 @@
+import { LatLngExpression } from "leaflet";
 import { create } from "zustand";
 
-export const usePlayers = create((set) => ({
+type Player = {
+  id: string;
+  name: string;
+  location: LatLngExpression;
+  status: string;
+};
+
+interface PlayerState {
+  playerCount: number;
+  players: Player[];
+  selectedPlayer: Player | string;
+  incrementPlayerCount: () => void;
+  resetPlayers: () => void;
+  addPlayer: (newPlayer: Player) => void;
+  selectPlayer: (player: Player) => void;
+  updatePlayer: (index: number, newData: Player) => void;
+}
+
+export const usePlayers = create<PlayerState>((set) => ({
   playerCount: 0,
   players: [],
   selectedPlayer: "",

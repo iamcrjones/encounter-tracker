@@ -14,10 +14,22 @@ const EntityMenu = () => {
   };
 
   const handleAddEnemy = () => {
-    addEnemy({ name: "test-enemy", status: "none", location: [1000, 1000] });
+    const enemyId = crypto.randomUUID();
+    addEnemy({
+      id: enemyId,
+      name: "test-enemy",
+      status: "none",
+      location: [1000, 1000],
+    });
   };
   const handleAddPlayer = () => {
-    addPlayer({ name: "test", status: "none", location: [500, 500] });
+    const playerId = crypto.randomUUID();
+    addPlayer({
+      id: playerId,
+      name: "test",
+      status: "none",
+      location: [1000, 1000],
+    });
   };
 
   return (
@@ -36,7 +48,7 @@ const EntityMenu = () => {
             return <p key={`p-${player.name}-${ix}`}>{player.name}</p>;
           })}
           <button
-            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
+            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out select-none`}
             onClick={handleAddPlayer}
           >
             New
@@ -50,7 +62,7 @@ const EntityMenu = () => {
             return <p key={`e-${enemy.name}-${ix}`}>{enemy.name}</p>;
           })}
           <button
-            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out`}
+            className={`${open ? "w-48 outline-2" : "w-0 outline-0"} h-20 outline outline-zinc-600 text-white self-center mb-10 overflow-hidden  transition-all duration-500 ease-in-out select-none`}
             onClick={handleAddEnemy}
           >
             New

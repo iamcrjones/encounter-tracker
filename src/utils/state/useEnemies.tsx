@@ -1,6 +1,25 @@
+import { LatLngExpression } from "leaflet";
 import { create } from "zustand";
 
-export const useEnemies = create((set) => ({
+type Enemy = {
+  id: string;
+  name: string;
+  status: string;
+  location: LatLngExpression;
+};
+
+interface EnemyState {
+  enemyCount: number;
+  enemies: Enemy[];
+  selectedEnemy: Enemy | string;
+  incrementEnemyCount: () => void;
+  resetEnemyCount: () => void;
+  addEnemy: (newEnemy: Enemy) => void;
+  selectEnemy: (enemy: Enemy) => void;
+  updateEnemy: (index: number, newData: Enemy) => void;
+}
+
+export const useEnemies = create<EnemyState>((set) => ({
   enemyCount: 0,
   enemies: [],
   selectedEnemy: "",
